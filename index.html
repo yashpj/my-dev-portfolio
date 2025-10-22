@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yash Gupta | Software Engineer Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scroll behavior for smooth transitions between sections */
+        html {
+            scroll-behavior: smooth;
+            /* Use Inter font - clean and modern */
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar style (optional, for aesthetics) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937; /* Gray-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #14b8a6; /* Accent color */
+            border-radius: 4px;
+        }
+        section {
+            padding: 6rem 0;
+            min-height: 100vh;
+            position: relative; 
+            z-index: 10; /* Ensure content is above the star field */
+        }
+        
+        /* ------------------------------------- */
+        /* 1. Star Background Animation */
+        /* ------------------------------------- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Creating three layers of radial gradients for a multi-speed star effect */
+            background: radial-gradient(circle at 10% 50%, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+                        radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+                        radial-gradient(circle at 40% 90%, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+            background-size: 1500px 1500px, 1200px 1200px, 1000px 1000px;
+            opacity: 0.8;
+            z-index: 1; /* Below content */
+            animation: stars-move 300s linear infinite; /* Very slow, subtle drift */
+        }
+
+        @keyframes stars-move {
+            from {
+                background-position: 0 0, 0 0, 0 0;
+            }
+            to {
+                /* Moving the background positions for the animation */
+                background-position: 1500px 1500px, -1200px -1200px, 1000px 1000px;
+            }
+        }
+
+        /* ------------------------------------- */
+        /* 2. Entrance Animation Keyframes */
+        /* ------------------------------------- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Utility class to be applied by JavaScript when the element is in view */
+        .animate-active {
+            animation: fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        /* Initial state for elements waiting to be animated */
+        .hidden-on-load {
+            opacity: 0;
+            /* Ensure the animation is not triggered until JS adds .animate-active */
+            animation: none; 
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#0f172a', // Slate-900 for main background
+                        'accent': '#14b8a6', // Teal-500 for a pop of color
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-primary-dark text-gray-100 antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-primary-dark/95 backdrop-blur-sm shadow-xl border-b border-gray-800">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-extrabold text-accent hover:text-teal-400 transition duration-300">
+                Y.G.
+            </a>
+            <div class="space-x-4 md:space-x-8 text-sm font-medium">
+                <a href="#about" class="hover:text-accent transition duration-300">About & Skills</a>
+                <a href="#experience" class="hover:text-accent transition duration-300">Experience</a>
+                <a href="#projects" class="hover:text-accent transition duration-300">Projects</a>
+                <a href="#contact" class="hover:text-accent transition duration-300">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="flex items-center justify-center text-center">
+        <div class="max-w-4xl px-4">
+            <!-- Apply animation class and initial hidden state to main elements -->
+            <div class="h-32 w-32 mx-auto mb-6 rounded-full bg-gray-700 border-4 border-accent shadow-2xl overflow-hidden hidden-on-load animatable" data-delay="0">
+                <!-- Replace with your actual photo URL -->
+                <img src="https://placehold.co/128x128/1f2937/ffffff?text=Yash+G" alt="Your Profile Photo" class="object-cover w-full h-full" onerror="this.src='https://placehold.co/128x128/1f2937/ffffff?text=Yash+G'">
+            </div>
+            <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight tracking-tight mb-4 hidden-on-load animatable" data-delay="100">
+                Hello, I'm <span class="text-accent">Yash Gupta</span>
+            </h1>
+            <p class="text-xl sm:text-3xl font-light text-gray-400 mb-10 hidden-on-load animatable" data-delay="200">
+                Software Engineer and Master's Student at University at Buffalo, specializing in Full-Stack and ML/AI.
+            </p>
+            <div class="flex justify-center space-x-4 hidden-on-load animatable" data-delay="300">
+                <a href="#experience" class="px-8 py-3 bg-accent text-primary-dark font-semibold rounded-lg shadow-lg hover:bg-teal-400 transform hover:scale-[1.02] transition duration-300">
+                    View My Experience
+                </a>
+                <a href="yashgupta-resumepdf.pdf" target="_blank" class="px-8 py-3 border border-gray-600 text-gray-200 font-semibold rounded-lg hover:bg-gray-800 transition duration-300">
+                    Download CV
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. About Me Section -->
+    <section id="about" class="bg-gray-800 border-t border-b border-gray-700">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-accent hidden-on-load animatable" data-delay="0">My Technical Focus</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="hidden-on-load animatable" data-delay="100">
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        I am a highly driven Software Engineer with experience spanning large-scale platform migration, real-time aggregation services, and machine learning models. I focus on building **scalable, maintainable systems** using modern backend frameworks and cloud architecture.
+                    </p>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        Currently pursuing my Master's at UB, I am deepening my expertise in **AI/ML, PyTorch, and Graph Neural Networks** to tackle complex data challenges while continuing my work in full-stack development.
+                    </p>
+                    <div class="mt-6 text-sm text-gray-400">
+                        <p>Education: **University at Buffalo, SUNY** (M.S. Computer Science)</p>
+                        <p>Undergrad: **Jaypee Institute of Information Technology** (B.Tech, CS)</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <!-- Technical Skills -->
+                    <div class="p-4 bg-gray-700 rounded-xl shadow-lg hidden-on-load animatable" data-delay="200">
+                        <h3 class="font-semibold text-lg text-accent mb-2">Backend & Databases</h3>
+                        <p class="text-sm text-gray-300">
+                            **Node.js, Nest.js, FastAPI, Spring Boot**, Python, TypeScript, RESTful APIs, Microservices, PostgreSQL, MongoDB, Redis.
+                        </p>
+                    </div>
+                    <!-- ML/AI Skills -->
+                    <div class="p-4 bg-gray-700 rounded-xl shadow-lg hidden-on-load animatable" data-delay="300">
+                        <h3 class="font-semibold text-lg text-accent mb-2">ML/AI & Cloud</h3>
+                        <p class="text-sm text-gray-300">
+                            **PyTorch, TensorFlow, Scikit-learn, GNNs, NLP**, AWS, Docker, Kubernetes, CI/CD, Kafka.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 3. Professional Experience Section -->
+    <section id="experience" class="border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-16 text-accent hidden-on-load animatable" data-delay="0">Professional Experience</h2>
+
+            <div class="space-y-12">
+                <!-- Job 1: Wizni Software Ltd (Arive Platform) -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl transition duration-500 transform hover:scale-[1.01] border border-gray-700 hidden-on-load animatable" data-delay="100">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Software Engineer, Wizni Software Ltd (Arive Platform)</h3>
+                            <p class="text-lg text-accent">Gurgaon, India</p>
+                        </div>
+                        <p class="text-gray-400 mt-2 md:mt-0 md:text-right">June 2023 – Dec 2024</p>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2 text-base">
+                        <li>Migrated legacy **Node.js services to Nest.js**, improving scalability, maintainability, and developer productivity through modular architecture and strict typing.</li>
+                        <li>Integrated high-demand Loan and Lead modules with **Zapier** for event-driven automations, **eliminating 100% manual data entry** and improving broker satisfaction by 80%.</li>
+                        <li>Optimized complex **SQL queries** in the user portal, reducing data load times by **50%** and enhancing responsiveness.</li>
+                        <li>Led code reviews, refactoring efforts, and documentation improvements, significantly reducing technical debt and improving onboarding efficiency.</li>
+                    </ul>
+                </div>
+
+                <!-- Job 2: Paytm One97 Communications Ltd -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl transition duration-500 transform hover:scale-[1.01] border border-gray-700 hidden-on-load animatable" data-delay="200">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Software Engineer, Paytm One97 Communications Ltd</h3>
+                            <p class="text-lg text-accent">Noida, India</p>
+                        </div>
+                        <p class="text-gray-400 mt-2 md:mt-0 md:text-right">July 2021 – May 2023</p>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2 text-base">
+                        <li>Architected **digital health consultation platform** for the Government of India's UHI initiative, integrating government APIs via AWS API Gateway and implementing **WebSocket-based real-time chat**.</li>
+                        <li>Built **ambulance aggregator service** from the ground up, including database design, multi-partner API integration, and payment processing using **TypeScript, MongoDB, and Redis**.</li>
+                        <li>Built self-service dashboard with Excel upload functionality, enabling PMs to configure insurance metadata and reducing manual configuration time by **80%**.</li>
+                        <li>Onboarded 5+ insurance brokers to the aggregator platform by collaborating with clients to integrate their APIs and designing data schemas in **Postgres**.</li>
+                    </ul>
+                </div>
+                
+                <!-- Internship: Kuliza Technologies (Now a full entry) -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl transition duration-500 transform hover:scale-[1.01] border border-gray-700 hidden-on-load animatable" data-delay="300">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Software Engineering Intern, Kuliza Technologies</h3>
+                            <p class="text-lg text-accent">Bengaluru, India</p>
+                        </div>
+                        <p class="text-gray-400 mt-2 md:mt-0 md:text-right">Jan 2021 – July 2021</p>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2 text-base">
+                       <li>Built custom lending solutions for Lending Kart and L&T clients using the lend.in platform, collaborating directly with clients to gather requirements.</li>
+                       <li>Configured **Java/Spring Boot microservices** to develop end-to-end workflow configurations and credit-risk assessment systems.</li>
+                       <li>Managed both backend development and DevOps responsibilities for multi-client deployments, successfully delivering products to the UAT phase.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16 hidden-on-load animatable" data-delay="400">
+                <a href="yashgupta-resumepdf.pdf" target="_blank" class="text-lg text-accent hover:text-teal-400 font-medium">
+                    View Full Resume for All Details &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Academic & Personal Projects Section -->
+    <section id="projects" class="bg-gray-800 border-t border-b border-gray-700 min-h-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-16 text-accent hidden-on-load animatable" data-delay="0">Academic & Personal Projects</h2>
+
+            <div class="grid gap-10 md:grid-cols-2">
+
+                <!-- Project Card 1: EventHub -->
+                <div class="bg-gray-900 rounded-xl overflow-hidden shadow-2xl transition duration-500 transform hover:scale-[1.03] border border-gray-700 hover:border-accent/50 hidden-on-load animatable" data-delay="100">
+                    <img src="https://placehold.co/600x400/1f2937/ffffff?text=EventHub+Booking" alt="EventHub" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block bg-gray-700 text-accent text-xs font-medium px-2.5 py-0.5 rounded-full mb-2">Full-Stack Development</span>
+                        <h3 class="text-2xl font-semibold mb-2 text-white">EventHub: Full-Stack Booking Platform</h3>
+                        <p class="text-gray-400 mb-4 text-base">
+                            A scalable event management system built with **FastAPI (Python), React/TypeScript**, and PostgreSQL. Features JWT auth, WebSockets for real-time notifications, and Stripe payment integration.
+                        </p>
+                        <div class="flex space-x-3 text-sm font-medium">
+                            <a href="#" target="_blank" class="text-accent hover:text-teal-400">View Demo &rarr;</a>
+                            <span class="text-gray-500">•</span>
+                            <a href="#" target="_blank" class="text-gray-400 hover:text-white">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2: GRASP -->
+                <div class="bg-gray-900 rounded-xl overflow-hidden shadow-2xl transition duration-500 transform hover:scale-[1.03] border border-gray-700 hover:border-accent/50 hidden-on-load animatable" data-delay="200">
+                    <img src="https://placehold.co/600x400/1f2937/ffffff?text=Molecular+ML+Model" alt="GRASP" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block bg-gray-700 text-accent text-xs font-medium px-2.5 py-0.5 rounded-full mb-2">ML/Deep Learning Research</span>
+                        <h3 class="text-2xl font-semibold mb-2 text-white">GRASP: Molecular Representation Learning</h3>
+                        <p class="text-gray-400 mb-4 text-base">
+                            Developed a cross-modal self-supervised framework aligning molecular graphs and SMILES using **PyTorch Geometric**. Achieved strong transfer learning results on MoleculeNet benchmarks (**0.94 ROC-AUC**), addressing label scarcity.
+                        </p>
+                        <div class="flex space-x-3 text-sm font-medium">
+                            <a href="#" target="_blank" class="text-gray-400 hover:text-white">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact Section -->
+    <section id="contact" class="bg-gray-900 border-t border-gray-700">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-4 text-accent hidden-on-load animatable" data-delay="0">Get In Touch</h2>
+            <p class="text-gray-300 text-xl mb-12 hidden-on-load animatable" data-delay="100">
+                I'm currently seeking new opportunities and open to discussing collaborations. My inbox is always open!
+            </p>
+
+            <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 hidden-on-load animatable" data-delay="200">
+                <!-- 
+                    *** ACTION REQUIRED FOR FUNCTIONAL FORM ***
+                    To receive form submissions (since you're using GitHub Pages):
+                    1. Go to https://formspree.io/ and create a free account.
+                    2. Create a new form, and they will give you a unique endpoint (e.g., https://formspree.io/f/YOUR_CODE).
+                    3. REPLACE the placeholder URL below with your unique Formspree endpoint.
+                -->
+                <form action="https://formspree.io/f/YOUR_UNIQUE_CODE_GOES_HERE" method="POST" class="space-y-6">
+                    <div>
+                        <input type="text" id="name" name="name" placeholder="Your Name" required
+                            class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-accent focus:ring-accent placeholder-gray-400 text-white">
+                    </div>
+                    <div>
+                        <input type="email" id="email" name="_replyto" placeholder="Your Email" required
+                            class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-accent focus:ring-accent placeholder-gray-400 text-white">
+                    </div>
+                    <div>
+                        <textarea id="message" name="message" rows="4" placeholder="Your Message" required
+                            class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-accent focus:ring-accent placeholder-gray-400 text-white"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full px-4 py-3 bg-accent text-primary-dark font-semibold rounded-lg shadow-lg hover:bg-teal-400 transform hover:scale-[1.01] transition duration-300">
+                        Send Message
+                    </button>
+                </form>
+
+                <div class="mt-8 text-gray-400">
+                    <p>Or connect with me directly:</p>
+                    <p class="text-lg mt-2 text-white">Email: <a href="mailto:yashgupt@buffalo.edu" class="text-accent hover:underline">yashgupt@buffalo.edu</a></p>
+                    <p class="text-lg mt-2 text-white">LinkedIn: <a href="#" target="_blank" class="text-accent hover:underline">/in/YourLinkedIn</a></p>
+                    <p class="text-lg mt-2 text-white">GitHub: <a href="#" target="_blank" class="text-accent hover:underline">/YourGitHub</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Footer -->
+    <footer class="bg-primary-dark border-t border-gray-800 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500 hidden-on-load animatable" data-delay="0">
+            &copy; <span id="currentYear"></span> Yash Gupta. Designed with Tailwind CSS.
+        </div>
+    </footer>
+
+    <script>
+        // Set the current year for the copyright notice
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // ----------------------------------------------------
+        // JavaScript for Scroll-Triggered Animations (Intersection Observer)
+        // ----------------------------------------------------
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const elements = entry.target.querySelectorAll('.animatable');
+                    elements.forEach((element, index) => {
+                        // Apply staggered delay using the data-delay attribute
+                        const delay = element.getAttribute('data-delay') || (index * 150);
+                        element.style.animationDelay = `${delay}ms`;
+                        element.classList.remove('hidden-on-load');
+                        element.classList.add('animate-active');
+                    });
+                    
+                    // Unobserve the parent section once its contents are animated
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            // Options: rootMargin pushes the trigger point up/down
+            rootMargin: '0px 0px -15% 0px', 
+            threshold: 0.1 // Trigger when 10% of the item is visible
+        });
+
+        // Target the main sections to trigger animations for all child elements
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Also observe the footer directly
+        document.querySelectorAll('footer').forEach(footer => {
+            observer.observe(footer);
+        });
+
+        // Initialize elements that should animate right away (Hero section elements)
+        // We observe the Hero section, so the first elements will animate as soon as the observer fires (which is usually instantly).
+        // Let's ensure the hero section elements are ready for animation.
+        document.querySelectorAll('#hero .animatable').forEach(el => {
+            el.classList.remove('hidden-on-load');
+            el.classList.add('animate-active');
+        });
+    </script>
+</body>
+</html>
